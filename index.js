@@ -32,6 +32,7 @@ function renderTable() {
 }
 
 function sortTable(n) {
+  const numericColumns = [0, 3, 4, 6, 8]; // Columns with numeric values
   const table = document.getElementById("chemicalTable");
   let rows,
     switching,
@@ -43,30 +44,56 @@ function sortTable(n) {
     switchcount = 0;
   switching = true;
   dir = "asc";
+
   while (switching) {
     switching = false;
     rows = table.rows;
+    
+    // Loop through all table rows (except the first, which contains headers)
     for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          break;
+      
+      // Check if the column is numeric
+      if (numericColumns.includes(n)) {
+        let valX = parseFloat(x.innerHTML) || 0; // Convert to float, fallback to 0
+        let valY = parseFloat(y.innerHTML) || 0;
+
+        if (dir == "asc") {
+          if (valX > valY) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (valX < valY) {
+            shouldSwitch = true;
+            break;
+          }
         }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          shouldSwitch = true;
-          break;
+      } else {
+        // String comparison for non-numeric columns
+        if (dir == "asc") {
+          if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
+        } else if (dir == "desc") {
+          if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+            shouldSwitch = true;
+            break;
+          }
         }
       }
     }
+
     if (shouldSwitch) {
+      // If a switch is needed, perform the switch
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
       switchcount++;
     } else {
+      // If no switching has been done, switch the direction and repeat the process
       if (switchcount == 0 && dir == "asc") {
         dir = "desc";
         switching = true;
