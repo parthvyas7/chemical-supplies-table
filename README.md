@@ -18,7 +18,7 @@ Table with the column headers
 
 # Demo
 
-[Visit]()
+[Visit](https://parthvyas7.github.io/interactive-chemical-table/)
 
 ## Screenshots
 

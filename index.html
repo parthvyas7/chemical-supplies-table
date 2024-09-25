@@ -8,12 +8,14 @@
   </head>
   <body>
     <div class="toolbar">
+      <button onclick="makeEditable()" id="editableBtn">Make Editable</button>
       <button onclick="addRow()">Add Row</button>
       <button onclick="moveRowUp()">Move Row Up</button>
       <button onclick="moveRowDown()">Move Row Down</button>
       <button onclick="deleteRow()">Delete Row</button>
       <button onclick="refreshData()">Refresh Data</button>
       <button onclick="saveData()">Save Data</button>
+      <button onclick="downloadData()">Download Data</button>
     </div>
     <table id="chemicalTable">
       <thead>
@@ -33,6 +35,6 @@
         <!-- Table rows will be dynamically added here -->
       </tbody>
     </table>
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
   </body>
 </html>

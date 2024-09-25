@@ -1,9 +1,17 @@
-let data = [];
+let data = [], editable = false;
 
 fetch('./chemicals.json').then(res => res.json()).then(res => {
   data = res;
   renderTable();
 })
+
+function makeEditable() {
+  let btn = document.querySelector('.toolbar button')
+  if (!editable) btn.textContent = "Finished Edit?";
+  else btn.textContent = "Make Editable";
+  editable = !editable
+  renderTable();
+}
 
 function renderTable() {
   const tbody = document.querySelector("#chemicalTable tbody");
@@ -13,8 +21,10 @@ function renderTable() {
     Object.values(row).forEach((value) => {
       const td = document.createElement("td");
       td.textContent = value;
-      td.classList.add("editable");
-      td.contentEditable = true;
+      if (editable) {
+        td.classList.add("editable");
+        td.contentEditable = true;
+      }
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
@@ -143,4 +153,13 @@ function saveData() {
   alert("Data saved successfully!");
 }
 
-renderTable();
+function downloadData() {
+  const jsonData = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'dataModified.json';
+  link.click();
+  URL.revokeObjectURL(url);
+}
