@@ -1,4 +1,4 @@
-let data = [], editable = false;
+let data = [], editable = false, selectedRow = null;
 
 fetch('./chemicals.json').then(res => res.json()).then(res => {
   data = res;
@@ -29,6 +29,7 @@ function renderTable() {
     });
     tbody.appendChild(tr);
   });
+  activeRow()
 }
 
 function sortTable(n) {
@@ -49,15 +50,13 @@ function sortTable(n) {
     switching = false;
     rows = table.rows;
     
-    // Loop through all table rows (except the first, which contains headers)
     for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
       
-      // Check if the column is numeric
       if (numericColumns.includes(n)) {
-        let valX = parseFloat(x.innerHTML) || 0; // Convert to float, fallback to 0
+        let valX = parseFloat(x.innerHTML) || 0;
         let valY = parseFloat(y.innerHTML) || 0;
 
         if (dir == "asc") {
@@ -72,7 +71,6 @@ function sortTable(n) {
           }
         }
       } else {
-        // String comparison for non-numeric columns
         if (dir == "asc") {
           if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
             shouldSwitch = true;
@@ -88,12 +86,10 @@ function sortTable(n) {
     }
 
     if (shouldSwitch) {
-      // If a switch is needed, perform the switch
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
       switchcount++;
     } else {
-      // If no switching has been done, switch the direction and repeat the process
       if (switchcount == 0 && dir == "asc") {
         dir = "desc";
         switching = true;
@@ -120,9 +116,6 @@ function addRow() {
 }
 
 function moveRowUp() {
-  const selectedRow = document.querySelector(
-    "#chemicalTable tbody tr:focus"
-  );
   if (selectedRow && selectedRow.previousElementSibling) {
     selectedRow.parentNode.insertBefore(
       selectedRow,
@@ -132,9 +125,6 @@ function moveRowUp() {
 }
 
 function moveRowDown() {
-  const selectedRow = document.querySelector(
-    "#chemicalTable tbody tr:focus"
-  );
   if (selectedRow && selectedRow.nextElementSibling) {
     selectedRow.parentNode.insertBefore(
       selectedRow.nextElementSibling,
@@ -144,9 +134,6 @@ function moveRowDown() {
 }
 
 function deleteRow() {
-  const selectedRow = document.querySelector(
-    "#chemicalTable tbody tr:focus"
-  );
   if (selectedRow) {
     const index = Array.from(selectedRow.parentNode.children).indexOf(
       selectedRow
@@ -189,4 +176,14 @@ function downloadData() {
   link.download = 'dataModified.json';
   link.click();
   URL.revokeObjectURL(url);
+}
+
+function activeRow() {
+  document.querySelectorAll("#chemicalTable tr").forEach(row => {
+    row.addEventListener("click", function() {
+      document.querySelectorAll(".clicked-row").forEach(el => el.classList.remove("clicked-row"));
+      this.classList.add("clicked-row");
+      selectedRow = this;
+    });
+  });
 }
