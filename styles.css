@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+th:hover {
+  background-color: #ddd;
+}
+.toolbar {
+  margin-bottom: 10px;
+}
+.toolbar button {
+  margin-right: 5px;
+}
+.editable:focus {
+  background-color: #fff9c4;
+  outline: none;
+}
