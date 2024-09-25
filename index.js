@@ -1,9 +1,17 @@
 let data = [], editable = false, selectedRow = null;
 
-fetch('./chemicals.json').then(res => res.json()).then(res => {
+fetch('./data.json').then(res => res.json()).then(res => {
   data = res;
   renderTable();
 })
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedData = localStorage.getItem('data');
+  if (savedData) {
+      data = JSON.parse(savedData);
+  }
+  renderTable();
+});
 
 function makeEditable() {
   let btn = document.querySelector('.toolbar button')
@@ -45,7 +53,7 @@ function sortTable(n) {
     switchcount = 0;
   switching = true;
   dir = "asc";
-  
+
   const headers = table.getElementsByTagName("TH");
   Array.from(headers).forEach((header, index) => {
     const icon = header.querySelector(".sort-icon");
@@ -55,12 +63,12 @@ function sortTable(n) {
   while (switching) {
     switching = false;
     rows = table.rows;
-    
+
     for (i = 1; i < rows.length - 1; i++) {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[n];
       y = rows[i + 1].getElementsByTagName("TD")[n];
-      
+
       if (numericColumns.includes(n)) {
         let valX = parseFloat(x.innerHTML) || 0;
         let valY = parseFloat(y.innerHTML) || 0;
@@ -176,7 +184,7 @@ function saveData() {
       quantity: parseInt(cells[8].textContent) || "",
     };
   });
-  console.log("Data saved:", data);
+  localStorage.setItem('data', JSON.stringify(data));
   alert("Data saved successfully!");
 }
 
@@ -193,7 +201,7 @@ function downloadData() {
 
 function activeRow() {
   document.querySelectorAll("#chemicalTable tr").forEach(row => {
-    row.addEventListener("click", function() {
+    row.addEventListener("click", function () {
       document.querySelectorAll(".clicked-row").forEach(el => el.classList.remove("clicked-row"));
       this.classList.add("clicked-row");
       selectedRow = this;

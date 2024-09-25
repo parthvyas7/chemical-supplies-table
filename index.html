@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <title>Interactive Chemical table</title>
+    <title>Chemical Supplies</title>
   </head>
   <body>
     <div class="header">
@@ -151,15 +151,27 @@
     <table id="chemicalTable">
       <thead>
         <tr>
-          <th onclick="sortTable(0)">ID  <span class="sort-icon"></span></th>
-          <th onclick="sortTable(1)">Chemical Name <span class="sort-icon"></span></th>
+          <th onclick="sortTable(0)">ID <span class="sort-icon"></span></th>
+          <th onclick="sortTable(1)">
+            Chemical Name <span class="sort-icon"></span>
+          </th>
           <th onclick="sortTable(2)">Vendor <span class="sort-icon"></span></th>
-          <th onclick="sortTable(3)">Density (g/m<sup>3</sup>) <span class="sort-icon"></span></th>
-          <th onclick="sortTable(4)">Viscosity (m<sup>2</sup>/s) <span class="sort-icon"></span></th>
-          <th onclick="sortTable(5)">Packaging <span class="sort-icon"></span></th>
-          <th onclick="sortTable(6)">Pack Size <span class="sort-icon"></span></th>
+          <th onclick="sortTable(3)">
+            Density (g/m<sup>3</sup>) <span class="sort-icon"></span>
+          </th>
+          <th onclick="sortTable(4)">
+            Viscosity (m<sup>2</sup>/s) <span class="sort-icon"></span>
+          </th>
+          <th onclick="sortTable(5)">
+            Packaging <span class="sort-icon"></span>
+          </th>
+          <th onclick="sortTable(6)">
+            Pack Size <span class="sort-icon"></span>
+          </th>
           <th onclick="sortTable(7)">Unit <span class="sort-icon"></span></th>
-          <th onclick="sortTable(8)">Quantity <span class="sort-icon"></span></th>
+          <th onclick="sortTable(8)">
+            Quantity <span class="sort-icon"></span>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -167,5 +179,20 @@
       </tbody>
     </table>
     <script src="index.js" defer></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then((registration) => {
+            console.log(
+              "Service Worker registered with scope:",
+              registration.scope
+            );
+          })
+          .catch((error) => {
+            console.log("Service Worker registration failed:", error);
+          });
+      }
+    </script>
   </body>
 </html>

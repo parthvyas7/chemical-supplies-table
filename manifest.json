@@ -1,0 +1,9 @@
+{
+  "name": "Chemical Supplies PWA",
+  "short_name": "ChemSupplies",
+  "description": "A progressive web app for managing chemical supplies data",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f2f2f2"
+}
