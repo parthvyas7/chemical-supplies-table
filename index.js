@@ -14,10 +14,10 @@ if ("serviceWorker" in navigator) {
     });
 }
 
-// fetch('./data.json').then(res => res.json()).then(res => {
-//   data = res;
-//   renderTable();
-// })
+fetch('./data.json').then(res => res.json()).then(res => {
+  data = res;
+  renderTable();
+})
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedData = localStorage.getItem('data');
