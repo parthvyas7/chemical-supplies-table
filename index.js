@@ -1,18 +1,33 @@
 let data = [], editable = false, selectedRow = null;
 
-fetch('./data.json').then(res => res.json()).then(res => {
-  data = res;
-  renderTable();
-})
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/service-worker.js")
+    .then((registration) => {
+      console.log(
+        "Service Worker registered with scope:",
+        registration.scope
+      );
+    })
+    .catch((error) => {
+      console.log("Service Worker registration failed:", error);
+    });
+}
+
+// fetch('./data.json').then(res => res.json()).then(res => {
+//   data = res;
+//   renderTable();
+// })
 
 document.addEventListener('DOMContentLoaded', () => {
   const savedData = localStorage.getItem('data');
+  console.log(savedData)
   if (savedData) {
-      data = JSON.parse(savedData);
-  }
+    data = JSON.parse(savedData);
+  } 
   renderTable();
 });
-
+  
 function makeEditable() {
   let btn = document.querySelector('.toolbar button')
   if (!editable) btn.textContent = "Finished Edit?";
