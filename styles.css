@@ -64,3 +64,17 @@ button:hover {
   font-size: large;
   font-weight: bold;
 }
+.sort-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 5px;
+}
+
+.sort-icon.up::before {
+  content: "▲"; /* Up arrow */
+}
+
+.sort-icon.down::before {
+  content: "▼"; /* Down arrow */
+}

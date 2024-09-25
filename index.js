@@ -45,6 +45,12 @@ function sortTable(n) {
     switchcount = 0;
   switching = true;
   dir = "asc";
+  
+  const headers = table.getElementsByTagName("TH");
+  Array.from(headers).forEach((header, index) => {
+    const icon = header.querySelector(".sort-icon");
+    icon.classList.remove("up", "down");
+  });
 
   while (switching) {
     switching = false;
@@ -95,6 +101,13 @@ function sortTable(n) {
         switching = true;
       }
     }
+  }
+  const clickedHeader = headers[n];
+  const icon = clickedHeader.querySelector(".sort-icon");
+  if (dir === "asc") {
+    icon.classList.add("up");
+  } else {
+    icon.classList.add("down");
   }
 }
 
