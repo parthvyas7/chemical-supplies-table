@@ -1,5 +1,6 @@
 let data = [], editable = false, selectedRow = null;
 
+// Service worker initialisation
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("/service-worker.js")
@@ -14,14 +15,15 @@ if ("serviceWorker" in navigator) {
     });
 }
 
+// Populating table entries with data from data.json
 fetch('./data.json').then(res => res.json()).then(res => {
   data = res;
   renderTable();
 })
 
+// Prefetching data from stored data in browser
 document.addEventListener('DOMContentLoaded', () => {
   const savedData = localStorage.getItem('data');
-  console.log(savedData)
   if (savedData) {
     data = JSON.parse(savedData);
   } 
